@@ -19,10 +19,10 @@ class VideoGame extends FlameGame {
       'water_enemy.png',
     ]);
 
-    /* TiledComponent mapComponent =
-    await TiledComponent.load('grass.tmx', Vector2(32,32));
+    TiledComponent mapComponent =
+    await TiledComponent.load('scene.tmx', Vector2(32,32));
     add(mapComponent);
-*/
+
     MainPlayer mainPlayer = MainPlayer(position: Vector2(200, 200));
     add(mainPlayer);
   }
