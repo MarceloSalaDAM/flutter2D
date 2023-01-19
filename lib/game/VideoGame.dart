@@ -9,7 +9,8 @@ import 'package:flutter_game/players/EnemyPlayer.dart';
 import '../elements/Star.dart';
 import '../players/MainPlayer.dart';
 
-class VideoGame extends FlameGame with HasKeyboardHandlerComponents {
+class VideoGame extends FlameGame
+    with HasKeyboardHandlerComponents, HasCollisionDetection {
   VideoGame();
 
   @override

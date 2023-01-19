@@ -1,22 +1,21 @@
 import 'dart:html';
 
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
 import '../game/VideoGame.dart';
 
-class Star extends PositionComponent with HasGameRef<VideoGame> {
+class Star extends SpriteComponent with HasGameRef<VideoGame> {
   Star({
-    required Vector2 position,
-  }) : super(position: position);
+    required super.position,
+  }) : super(size: Vector2.all(32), anchor: Anchor.bottomCenter);
 
   @override
   Future<void>? onLoad() async {
     await super.onLoad();
+    final platformImage = game.images.fromCache('star.png');
+    sprite = Sprite(platformImage);
 
-    SpriteComponent starComponent = SpriteComponent.fromImage(
-        game.images.fromCache('star.png'),
-        size: Vector2.all(32), anchor: Anchor.bottomCenter);
-
-    add(starComponent);
+    add(RectangleHitbox()..collisionType = CollisionType.passive);
   }
 }
