@@ -36,7 +36,7 @@
 </data>
  </layer>
  <group id="2" name="obj">
-  <objectgroup id="4" name="gotas">
+  <objectgroup id="4" name="gotas" visible="0">
    <object id="2" x="636" y="552">
     <point/>
    </object>
@@ -46,27 +46,27 @@
    <object id="4" x="206" y="460">
     <point/>
    </object>
-   <object id="12" x="578" y="434">
+   <object id="12" x="586" y="442">
     <point/>
    </object>
   </objectgroup>
   <objectgroup id="3" name="stars">
-   <object id="5" x="590" y="772">
+   <object id="5" x="577.333" y="748.667">
     <point/>
    </object>
-   <object id="6" x="688" y="766">
+   <object id="6" x="704" y="750">
     <point/>
    </object>
-   <object id="7" x="972" y="552">
+   <object id="7" x="979.333" y="555.333">
     <point/>
    </object>
-   <object id="9" x="652" y="430">
+   <object id="9" x="656.667" y="439.333">
     <point/>
    </object>
-   <object id="10" x="398" y="492">
+   <object id="10" x="400" y="486">
     <point/>
    </object>
-   <object id="11" x="402" y="318">
+   <object id="11" x="400" y="324.667">
     <point/>
    </object>
   </objectgroup>
