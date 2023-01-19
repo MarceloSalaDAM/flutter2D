@@ -1,5 +1,6 @@
 import 'package:flame/game.dart';
 import 'package:flame_tiled/flame_tiled.dart';
+import 'package:flutter_game/players/EnemyPlayer.dart';
 
 import '../players/MainPlayer.dart';
 
@@ -26,10 +27,16 @@ class VideoGame extends FlameGame {
     ObjectGroup? estrellas = mapComponent.tileMap.getLayer<ObjectGroup>("stars");
     ObjectGroup? enemigos  = mapComponent.tileMap.getLayer<ObjectGroup>("gotas");
 
-    //for (final estrella in estrellas!.objects) {
-    // print("------------" + estrella.x.toString()+"//"+ estrella.y.toString());
-
-
+    for (final enemigo in enemigos!.objects) {
+      // print("------------" + estrella.x.toString()+"//"+ estrella.y.toString());
+      EnemyPlayer enemyPlayer = EnemyPlayer(position: Vector2(enemigo.x, enemigo.y));
+      add(enemyPlayer);
+    }
+    for (final estrella in estrellas!.objects) {
+      // print("------------" + estrella.x.toString()+"//"+ estrella.y.toString());
+      EnemyPlayer enemyPlayer = EnemyPlayer(position: Vector2(estrella.x, estrella.y));
+      add(enemyPlayer);
+    }
 
     MainPlayer mainPlayer = MainPlayer(position: Vector2(200, 300));
     add(mainPlayer);
