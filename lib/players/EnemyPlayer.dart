@@ -1,4 +1,6 @@
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 
 import '../game/VideoGame.dart';
 
@@ -15,6 +17,18 @@ class EnemyPlayer extends SpriteAnimationComponent with HasGameRef<VideoGame> {
         amount: 2,
         textureSize: Vector2.all(16),
         stepTime: 0.12,
+      ),
+    );
+
+    add(RectangleHitbox()..collisionType = CollisionType.passive);
+    add(
+      MoveEffect.by(
+        Vector2(-0.5 * size.x, 1),
+        EffectController(
+          duration: 0.75,
+          alternate: true,
+          infinite: true,
+        ),
       ),
     );
   }

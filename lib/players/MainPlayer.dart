@@ -1,8 +1,11 @@
 import 'package:flame/components.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 
 import '../game/VideoGame.dart';
 
-class MainPlayer extends SpriteAnimationComponent with HasGameRef<VideoGame> {
+class MainPlayer extends SpriteAnimationComponent
+    with HasGameRef<VideoGame>, KeyboardHandler {
   MainPlayer({
     required super.position,
   }) : super(size: Vector2.all(32), anchor: Anchor.center);
@@ -17,5 +20,10 @@ class MainPlayer extends SpriteAnimationComponent with HasGameRef<VideoGame> {
         stepTime: 0.12,
       ),
     );
+  }
+
+  @override
+  bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+    return true;
   }
 }

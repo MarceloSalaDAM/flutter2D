@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flame/components.dart';
+import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter_game/players/EnemyPlayer.dart';
@@ -8,7 +9,7 @@ import 'package:flutter_game/players/EnemyPlayer.dart';
 import '../elements/Star.dart';
 import '../players/MainPlayer.dart';
 
-class VideoGame extends FlameGame {
+class VideoGame extends FlameGame with HasKeyboardHandlerComponents {
   VideoGame();
 
   @override
