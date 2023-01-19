@@ -5,7 +5,7 @@ import '../game/VideoGame.dart';
 class MainPlayer extends SpriteAnimationComponent with HasGameRef<VideoGame> {
   MainPlayer({
     required super.position,
-  }) : super(size: Vector2.all(64), anchor: Anchor.center);
+  }) : super(size: Vector2.all(32), anchor: Anchor.center);
 
   @override
   Future<void> onLoad() async {

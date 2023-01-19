@@ -20,10 +20,18 @@ class VideoGame extends FlameGame {
     ]);
 
     TiledComponent mapComponent =
-    await TiledComponent.load('scene.tmx', Vector2(32,32));
+        await TiledComponent.load('scene.tmx', Vector2(32, 32));
     add(mapComponent);
 
-    MainPlayer mainPlayer = MainPlayer(position: Vector2(200, 200));
+    ObjectGroup? estrellas = mapComponent.tileMap.getLayer<ObjectGroup>("stars");
+    ObjectGroup? enemigos  = mapComponent.tileMap.getLayer<ObjectGroup>("gotas");
+
+    //for (final estrella in estrellas!.objects) {
+    // print("------------" + estrella.x.toString()+"//"+ estrella.y.toString());
+
+
+
+    MainPlayer mainPlayer = MainPlayer(position: Vector2(200, 300));
     add(mainPlayer);
   }
 }

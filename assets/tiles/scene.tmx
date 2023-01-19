@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="2" nextobjectid="1">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="5" nextobjectid="13">
  <tileset firstgid="1" source="mapa.tsx"/>
  <layer id="1" name="Capa de patrones 1" width="40" height="30">
   <data encoding="csv">
@@ -35,4 +35,40 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <group id="2" name="obj">
+  <objectgroup id="4" name="gotas">
+   <object id="2" x="636" y="552">
+    <point/>
+   </object>
+   <object id="3" x="834" y="426">
+    <point/>
+   </object>
+   <object id="4" x="206" y="460">
+    <point/>
+   </object>
+   <object id="12" x="578" y="434">
+    <point/>
+   </object>
+  </objectgroup>
+  <objectgroup id="3" name="stars">
+   <object id="5" x="590" y="772">
+    <point/>
+   </object>
+   <object id="6" x="688" y="766">
+    <point/>
+   </object>
+   <object id="7" x="972" y="552">
+    <point/>
+   </object>
+   <object id="9" x="652" y="430">
+    <point/>
+   </object>
+   <object id="10" x="398" y="492">
+    <point/>
+   </object>
+   <object id="11" x="402" y="318">
+    <point/>
+   </object>
+  </objectgroup>
+ </group>
 </map>
