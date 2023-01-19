@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flame/components.dart';
 import 'package:flame/game.dart';
 import 'package:flame_tiled/flame_tiled.dart';
@@ -28,7 +30,9 @@ class VideoGame extends FlameGame {
 
     ObjectGroup? estrellas =
         mapComponent.tileMap.getLayer<ObjectGroup>("stars");
+
     ObjectGroup? enemigos = mapComponent.tileMap.getLayer<ObjectGroup>("gotas");
+    ObjectGroup? main = mapComponent.tileMap.getLayer<ObjectGroup>("initial");
 
     for (final enemigo in enemigos!.objects) {
       // print("------------" + estrella.x.toString()+"//"+ estrella.y.toString());
@@ -42,7 +46,12 @@ class VideoGame extends FlameGame {
       add(starMap);
     }
 
-    MainPlayer mainPlayer = MainPlayer(position: Vector2(200, 300));
+    MainPlayer mainPlayer = MainPlayer(
+        position: Vector2(main!.objects.first.x, main!.objects.first.y));
     add(mainPlayer);
+  }
+
+  Color backgroundColor() {
+    return const Color.fromRGBO(0, 255, 129, 0.30);
   }
 }
