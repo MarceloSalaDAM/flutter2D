@@ -39,7 +39,7 @@ class Hud extends PositionComponent with HasGameRef<VideoGame> {
       SpriteComponent(
         sprite: starSprite,
         position: Vector2(game.size.x - 100, 20),
-        size: Vector2.all(32),
+        size: Vector2.all(40),
         anchor: Anchor.center,
       ),
     );
@@ -50,7 +50,7 @@ class Hud extends PositionComponent with HasGameRef<VideoGame> {
         HeartHealthComponent(
           heartNumber: i,
           position: Vector2(positionX.toDouble(), 20),
-          size: Vector2.all(32),
+          size: Vector2.all(40),
         ),
       );
     }

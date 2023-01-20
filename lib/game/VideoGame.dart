@@ -7,6 +7,7 @@ import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter_game/players/EnemyPlayer.dart';
 
 import '../elements/Star.dart';
+import '../overlays/Hud.dart';
 import '../players/MainPlayer.dart';
 
 class VideoGame extends FlameGame
@@ -66,6 +67,8 @@ class VideoGame extends FlameGame
     MainPlayer mainPlayer = MainPlayer(
         position: Vector2(main!.objects.first.x, main!.objects.first.y));
     add(mainPlayer);
+
+    add(Hud());
   }
 
   Color backgroundColor() {

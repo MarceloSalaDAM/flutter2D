@@ -68,6 +68,7 @@ class MainPlayer extends SpriteAnimationComponent
   void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
     if (other is Star) {
       other.removeFromParent();
+      game.starsCollected++;
     }
 
     if (other is EnemyPlayer) {
@@ -91,6 +92,7 @@ class MainPlayer extends SpriteAnimationComponent
             hitByEnemy = false;
           },
       );
+      game.health--;
     }
   }
 
