@@ -19,6 +19,9 @@ class VideoGame extends FlameGame
   final Vector2 velocity = Vector2.zero();
   final double moveSpeed = 200;
 
+  int starsCollected = 0;
+  int health = 3;
+
   List<PositionComponent> visualObjects = [];
 
   VideoGame();
