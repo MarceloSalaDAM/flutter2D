@@ -11,6 +11,16 @@ import '../players/MainPlayer.dart';
 
 class VideoGame extends FlameGame
     with HasKeyboardHandlerComponents, HasCollisionDetection {
+  late TiledComponent mapComponent;
+
+  int horizontalMove = 0;
+  int verticalMove = 0;
+
+  final Vector2 velocity = Vector2.zero();
+  final double moveSpeed = 200;
+
+  List<PositionComponent> visualObjects = [];
+
   VideoGame();
 
   @override
@@ -26,8 +36,7 @@ class VideoGame extends FlameGame
       'water_enemy.png',
     ]);
 
-    TiledComponent mapComponent =
-        await TiledComponent.load('scene.tmx', Vector2(32, 32));
+    mapComponent = await TiledComponent.load('scene.tmx', Vector2(32, 32));
     add(mapComponent);
 
     ObjectGroup? estrellas =
@@ -40,11 +49,14 @@ class VideoGame extends FlameGame
       // print("------------" + estrella.x.toString()+"//"+ estrella.y.toString());
       EnemyPlayer enemyPlayer =
           EnemyPlayer(position: Vector2(enemigo.x, enemigo.y));
+
+      visualObjects.add(enemyPlayer);
       add(enemyPlayer);
     }
     for (final estrella in estrellas!.objects) {
       // print("------------" + estrella.x.toString()+"//"+ estrella.y.toString());
       Star starMap = Star(position: Vector2(estrella.x, estrella.y));
+      visualObjects.add(starMap);
       add(starMap);
     }
 
@@ -55,5 +67,21 @@ class VideoGame extends FlameGame
 
   Color backgroundColor() {
     return const Color.fromRGBO(0, 255, 129, 0.30);
+  }
+
+  @override
+  void update(double dt) {
+    velocity.x = horizontalMove * moveSpeed;
+    velocity.y = verticalMove * moveSpeed;
+    mapComponent.position -= velocity * dt;
+    for (final visualObj in visualObjects) {
+      visualObj.position -= velocity * dt;
+    }
+    super.update(dt);
+  }
+
+  void setDirection(int horizontalMove, int verticalMove) {
+    this.horizontalMove = horizontalMove;
+    this.verticalMove = verticalMove;
   }
 }

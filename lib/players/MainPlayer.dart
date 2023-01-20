@@ -42,23 +42,24 @@ class MainPlayer extends SpriteAnimationComponent
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
     horizontalMove = 0;
     verticalMove = 0;
-    horizontalMove += (keysPressed.contains(LogicalKeyboardKey.keyA) ||
-            keysPressed.contains(LogicalKeyboardKey.arrowLeft))
-        ? -1
-        : 0;
-    horizontalMove += (keysPressed.contains(LogicalKeyboardKey.keyD) ||
-            keysPressed.contains(LogicalKeyboardKey.arrowRight))
-        ? 1
-        : 0;
 
-    verticalMove += (keysPressed.contains(LogicalKeyboardKey.keyW) ||
-            keysPressed.contains(LogicalKeyboardKey.arrowUp))
-        ? -1
-        : 0;
-    verticalMove += (keysPressed.contains(LogicalKeyboardKey.keyS) ||
-            keysPressed.contains(LogicalKeyboardKey.arrowDown))
-        ? 1
-        : 0;
+    if ((keysPressed.contains(LogicalKeyboardKey.keyA) ||
+        keysPressed.contains(LogicalKeyboardKey.arrowLeft))) {
+      horizontalMove = -1;
+    } else if ((keysPressed.contains(LogicalKeyboardKey.keyD) ||
+        keysPressed.contains(LogicalKeyboardKey.arrowRight))) {
+      horizontalMove = 1;
+    }
+
+    if ((keysPressed.contains(LogicalKeyboardKey.keyW) ||
+        keysPressed.contains(LogicalKeyboardKey.arrowUp))) {
+      verticalMove = -1;
+    } else if ((keysPressed.contains(LogicalKeyboardKey.keyS) ||
+        keysPressed.contains(LogicalKeyboardKey.arrowDown))) {
+      verticalMove = 1;
+    }
+
+    game.setDirection(horizontalMove, verticalMove);
 
     return true;
   }
@@ -95,9 +96,10 @@ class MainPlayer extends SpriteAnimationComponent
 
   @override
   void update(double dt) {
-    velocity.x = horizontalMove * moveSpeed;
+    /* velocity.x = horizontalMove * moveSpeed;
     velocity.y = verticalMove * moveSpeed;
-    position += velocity * dt;
+    game.mapComponent.position -= velocity * dt;*/
+
     if (horizontalMove < 0 && scale.x > 0) {
       flipHorizontally();
     } else if (horizontalMove > 0 && scale.x < 0) {
