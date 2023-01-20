@@ -1,5 +1,7 @@
 import 'package:flame/game.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_game/widgets/GameOverMenu.dart';
+import 'package:flutter_game/widgets/Menu.dart';
 
 import 'game/VideoGame.dart';
 
@@ -10,8 +12,14 @@ import 'game/VideoGame.dart';
 
 void main() {
   runApp(
-    const GameWidget<VideoGame>.controlled(
+    GameWidget<VideoGame>.controlled(
       gameFactory: VideoGame.new,
+      overlayBuilderMap: {
+        'MainMenu': (_, game) => Menu(game: game),
+        'GameOver': (_, game) => GameOverMenu(game: game),
+        //'Joypad': (_, game) => Joypad(onDirectionChanged: game.joypadMoved),
+      },
+      initialActiveOverlays: const ['MainMenu'],
     ),
   );
 }

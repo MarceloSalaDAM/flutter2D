@@ -7,6 +7,7 @@ import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter_game/players/EnemyPlayer.dart';
 
 import '../elements/Star.dart';
+import '../main.dart';
 import '../overlays/Hud.dart';
 import '../players/MainPlayer.dart';
 
@@ -25,6 +26,8 @@ class VideoGame extends FlameGame
 
   List<PositionComponent> visualObjects = [];
 
+  late MainPlayer _mainPlayer;
+
   VideoGame();
 
   @override
@@ -39,7 +42,30 @@ class VideoGame extends FlameGame
       'star.png',
       'water_enemy.png',
     ]);
+    initializeGame(true);
+  }
 
+  Color backgroundColor() {
+    return const Color.fromRGBO(0, 255, 129, 0.30);
+  }
+
+  @override
+  void update(double dt) {
+    velocity.x = horizontalMove * moveSpeed;
+    velocity.y = verticalMove * moveSpeed;
+    mapComponent.position -= velocity * dt;
+    for (final visualObj in visualObjects) {
+      visualObj.position -= velocity * dt;
+    }
+    super.update(dt);
+  }
+
+  void setDirection(int horizontalMove, int verticalMove) {
+    this.horizontalMove = horizontalMove;
+    this.verticalMove = verticalMove;
+  }
+
+  Future<void> initializeGame(bool loadHud) async {
     mapComponent = await TiledComponent.load('scene.tmx', Vector2(32, 32));
     add(mapComponent);
 
@@ -64,30 +90,18 @@ class VideoGame extends FlameGame
       add(starMap);
     }
 
-    MainPlayer mainPlayer = MainPlayer(
+    _mainPlayer = MainPlayer(
         position: Vector2(main!.objects.first.x, main!.objects.first.y));
-    add(mainPlayer);
+    add(_mainPlayer);
 
-    add(Hud());
-  }
-
-  Color backgroundColor() {
-    return const Color.fromRGBO(0, 255, 129, 0.30);
-  }
-
-  @override
-  void update(double dt) {
-    velocity.x = horizontalMove * moveSpeed;
-    velocity.y = verticalMove * moveSpeed;
-    mapComponent.position -= velocity * dt;
-    for (final visualObj in visualObjects) {
-      visualObj.position -= velocity * dt;
+    if (loadHud) {
+      add(Hud());
     }
-    super.update(dt);
   }
 
-  void setDirection(int horizontalMove, int verticalMove) {
-    this.horizontalMove = horizontalMove;
-    this.verticalMove = verticalMove;
+  void reset() {
+    starsCollected = 0;
+    health = 3;
+    initializeGame(false);
   }
 }
