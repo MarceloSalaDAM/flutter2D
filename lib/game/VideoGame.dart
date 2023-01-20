@@ -42,6 +42,9 @@ class VideoGame extends FlameGame
       'star.png',
       'water_enemy.png',
     ]);
+
+    mapComponent = await TiledComponent.load('scene.tmx', Vector2(32, 32));
+    add(mapComponent);
     initializeGame(true);
   }
 
@@ -66,9 +69,6 @@ class VideoGame extends FlameGame
   }
 
   Future<void> initializeGame(bool loadHud) async {
-    mapComponent = await TiledComponent.load('scene.tmx', Vector2(32, 32));
-    add(mapComponent);
-
     ObjectGroup? estrellas =
         mapComponent.tileMap.getLayer<ObjectGroup>("stars");
 
