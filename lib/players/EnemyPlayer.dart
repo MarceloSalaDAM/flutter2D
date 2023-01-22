@@ -32,4 +32,12 @@ class EnemyPlayer extends SpriteAnimationComponent with HasGameRef<VideoGame> {
       ),
     );
   }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    if (game.health <= 0) {
+      removeFromParent();
+    }
+  }
 }

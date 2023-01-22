@@ -107,6 +107,11 @@ class MainPlayer extends SpriteAnimationComponent
     } else if (horizontalMove > 0 && scale.x < 0) {
       flipHorizontally();
     }
+
+    if (game.health <= 0) {
+      game.setDirection(0, 0);
+      removeFromParent();
+    }
     super.update(dt);
   }
 }

@@ -45,7 +45,7 @@ class VideoGame extends FlameGame
 
     mapComponent = await TiledComponent.load('scene.tmx', Vector2(32, 32));
     add(mapComponent);
-    initializeGame(true);
+    //initializeGame(true);
   }
 
   Color backgroundColor() {
@@ -60,6 +60,9 @@ class VideoGame extends FlameGame
     for (final visualObj in visualObjects) {
       visualObj.position -= velocity * dt;
     }
+    if (health <= 0) {
+      overlays.add('GameOver');
+    }
     super.update(dt);
   }
 
@@ -69,9 +72,11 @@ class VideoGame extends FlameGame
   }
 
   Future<void> initializeGame(bool loadHud) async {
+    visualObjects.clear();
+    mapComponent.position = Vector2(0, 0);
+
     ObjectGroup? estrellas =
         mapComponent.tileMap.getLayer<ObjectGroup>("stars");
-
     ObjectGroup? enemigos = mapComponent.tileMap.getLayer<ObjectGroup>("gotas");
     ObjectGroup? main = mapComponent.tileMap.getLayer<ObjectGroup>("initial");
 

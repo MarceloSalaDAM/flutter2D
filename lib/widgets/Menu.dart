@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../game/VideoGame.dart';
 
-
 class Menu extends StatelessWidget {
   // Reference to parent game.
   final VideoGame game;
@@ -31,7 +30,7 @@ class Menu extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                'FLUTTER GAME',
+                'Ember Quest',
                 style: TextStyle(
                   color: whiteTextColor,
                   fontSize: 24,
@@ -52,7 +51,7 @@ class Menu extends StatelessWidget {
                     backgroundColor: whiteTextColor,
                   ),
                   child: const Text(
-                    'JUGAR',
+                    'Play',
                     style: TextStyle(
                       fontSize: 40.0,
                       color: blackTextColor,

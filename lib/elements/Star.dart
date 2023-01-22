@@ -18,4 +18,12 @@ class Star extends SpriteComponent with HasGameRef<VideoGame> {
 
     add(RectangleHitbox()..collisionType = CollisionType.passive);
   }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    if (game.health <= 0) {
+      removeFromParent();
+    }
+  }
 }
