@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter_game/players/EnemyPlayer.dart';
 
@@ -10,25 +11,22 @@ import '../elements/Star.dart';
 import '../main.dart';
 import '../overlays/Hud.dart';
 import '../players/MainPlayer.dart';
+import '../ux/JoyPad.dart';
 
-class VideoGame extends FlameGame
+class VideoGame extends Forge2DGame
     with HasKeyboardHandlerComponents, HasCollisionDetection {
   late TiledComponent mapComponent;
-
-  int horizontalMove = 0;
-  int verticalMove = 0;
-
+  late PlayerBody _mainBody;
   final Vector2 velocity = Vector2.zero();
   final double moveSpeed = 200;
-
+  int horizontalMove = 0;
+  int verticalMove = 0;
   int starsCollected = 0;
   int health = 3;
 
   List<PositionComponent> visualObjects = [];
 
-  late MainPlayer _mainPlayer;
-
-  VideoGame();
+  VideoGame() : super(gravity: Vector2(0, 9.8), zoom: 0.75);
 
   @override
   Future<void>? onLoad() async {
@@ -95,9 +93,9 @@ class VideoGame extends FlameGame
       add(starMap);
     }
 
-    _mainPlayer = MainPlayer(
+    _mainBody = PlayerBody(
         position: Vector2(main!.objects.first.x, main!.objects.first.y));
-    add(_mainPlayer);
+    add(_mainBody);
 
     if (loadHud) {
       add(Hud());
@@ -108,5 +106,28 @@ class VideoGame extends FlameGame
     starsCollected = 0;
     health = 3;
     initializeGame(false);
+  }
+  void joypadMoved(Direction direction){
+    //print("JOYPAD EN MOVIMIENTO:   ---->  "+direction.toString());
+
+    horizontalMove=0;
+    verticalMove=0;
+
+    if(direction==Direction.left){
+      horizontalMove=-1;
+    }
+    else if(direction==Direction.right){
+      horizontalMove=1;
+    }
+
+
+    if(direction==Direction.up){
+      verticalMove=-1;
+    }
+    else if(direction==Direction.down){
+      verticalMove=1;
+    }
+
+    _mainBody.horizontalMove=horizontalDirection;
   }
 }

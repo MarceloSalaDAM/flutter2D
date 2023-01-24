@@ -1,12 +1,38 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
+import 'package:flame_forge2d/body_component.dart';
+import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_game/players/EnemyPlayer.dart';
+import 'package:forge2d/src/dynamics/body.dart';
 
 import '../elements/Star.dart';
 import '../game/VideoGame.dart';
+
+class PlayerBody extends BodyComponent<VideoGame> {
+  Vector2 position;
+
+  PlayerBody({required this.position});
+  late MainPlayer _mainPlayer;
+
+  @override
+  Future<void> onLoad() async {
+    // TODO: implement onLoad
+    await super.onLoad();
+    _mainPlayer=MainPlayer(position: position);
+    add(_mainPlayer);
+  }
+
+  @override
+  Body createBody() {
+    // TODO: implement createBody
+    BodyDef defCuerpo = BodyDef(position: position, type: BodyType.dynamic);
+    Body cuerpo = world.createBody(defCuerpo);
+    return cuerpo;
+  }
+}
 
 class MainPlayer extends SpriteAnimationComponent
     with HasGameRef<VideoGame>, KeyboardHandler, CollisionCallbacks {
