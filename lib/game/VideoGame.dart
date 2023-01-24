@@ -26,7 +26,7 @@ class VideoGame extends Forge2DGame
 
   List<PositionComponent> visualObjects = [];
 
-  VideoGame() : super(gravity: Vector2(0, 9.8), zoom: 0.75);
+  VideoGame() : super(gravity: Vector2(0, 9.8), zoom: 1);
 
   @override
   Future<void>? onLoad() async {
@@ -107,27 +107,25 @@ class VideoGame extends Forge2DGame
     health = 3;
     initializeGame(false);
   }
-  void joypadMoved(Direction direction){
+
+  void joypadMoved(Direction direction) {
     //print("JOYPAD EN MOVIMIENTO:   ---->  "+direction.toString());
 
-    horizontalMove=0;
-    verticalMove=0;
+    horizontalMove = 0;
+    verticalMove = 0;
 
-    if(direction==Direction.left){
-      horizontalMove=-1;
-    }
-    else if(direction==Direction.right){
-      horizontalMove=1;
-    }
-
-
-    if(direction==Direction.up){
-      verticalMove=-1;
-    }
-    else if(direction==Direction.down){
-      verticalMove=1;
+    if (direction == Direction.left) {
+      horizontalMove = -1;
+    } else if (direction == Direction.right) {
+      horizontalMove = 1;
     }
 
-    _mainBody.horizontalMove=horizontalDirection;
+    if (direction == Direction.up) {
+      verticalMove = -1;
+    } else if (direction == Direction.down) {
+      verticalMove = 1;
+    }
+
+    _mainBody.mainPlayer.horizontalMove = horizontalMove;
   }
 }
