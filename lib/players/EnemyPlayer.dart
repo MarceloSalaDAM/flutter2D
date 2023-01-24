@@ -6,8 +6,8 @@ import '../game/VideoGame.dart';
 
 class EnemyPlayer extends SpriteAnimationComponent with HasGameRef<VideoGame> {
   EnemyPlayer({
-    required super.position,
-  }) : super(size: Vector2.all(32), anchor: Anchor.bottomCenter);
+    required super.position,required super.size
+  }) : super(anchor: Anchor.bottomCenter);
 
   @override
   Future<void> onLoad() async {
@@ -21,7 +21,7 @@ class EnemyPlayer extends SpriteAnimationComponent with HasGameRef<VideoGame> {
     );
 
     add(RectangleHitbox()..collisionType = CollisionType.passive);
-    add(
+    /*add(
       MoveEffect.by(
         Vector2(-0.5 * size.x, 1),
         EffectController(
@@ -30,7 +30,7 @@ class EnemyPlayer extends SpriteAnimationComponent with HasGameRef<VideoGame> {
           infinite: true,
         ),
       ),
-    );
+    );*/
   }
 
   @override
