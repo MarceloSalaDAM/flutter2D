@@ -62,6 +62,7 @@ class PlayerBody extends BodyComponent<VideoGame> {
     camera.followBodyComponent(this);
   }
 
+
   void joypadMoved(Direction direction) {
     if (direction == Direction.none) {
       horizontalMove = 0;
@@ -81,7 +82,7 @@ class PlayerBody extends BodyComponent<VideoGame> {
     }
   }
 
-  @override
+ /* @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
     horizontalMove = 0;
     verticalMove = 0;
@@ -105,7 +106,7 @@ class PlayerBody extends BodyComponent<VideoGame> {
     game.setDirection(horizontalMove, verticalMove);
 
     return true;
-  }
+  }*/
 
   @override
   void update(double dt) {
@@ -118,7 +119,7 @@ class PlayerBody extends BodyComponent<VideoGame> {
     if (horizontalMove < 0 && mainPlayer.scale.x > 0) {
       mainPlayer.flipHorizontallyAroundCenter();
     } else if (horizontalMove > 0 && mainPlayer.scale.x < 0) {
-     mainPlayer.flipHorizontallyAroundCenter();
+      mainPlayer.flipHorizontallyAroundCenter();
     }
 
     if (game.health <= 0) {
@@ -133,13 +134,10 @@ class MainPlayer extends SpriteAnimationComponent
     with HasGameRef<VideoGame>, KeyboardHandler, CollisionCallbacks {
   MainPlayer({
     required super.position,
-  }) : super(size: Vector2.all(32), anchor: Anchor.center);
+  }) : super(anchor: Anchor.center);
 
   int horizontalMove = 0;
   int verticalMove = 0;
-
-  final Vector2 velocity = Vector2.zero();
-  final double moveSpeed = 200;
 
   late CircleHitbox hitbox;
 
@@ -155,8 +153,6 @@ class MainPlayer extends SpriteAnimationComponent
         stepTime: 0.12,
       ),
     );
-    hitbox = CircleHitbox();
-    add(hitbox);
   }
 
   @override

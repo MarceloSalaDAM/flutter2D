@@ -7,6 +7,8 @@ import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 import 'package:flutter_game/players/EnemyPlayer.dart';
 
+import '../bodies/EnemyBody.dart';
+import '../bodies/SceneBody.dart';
 import '../elements/Star.dart';
 import '../main.dart';
 import '../overlays/Hud.dart';
@@ -52,12 +54,6 @@ class VideoGame extends Forge2DGame
 
   @override
   void update(double dt) {
-    velocity.x = horizontalMove * moveSpeed;
-    velocity.y = verticalMove * moveSpeed;
-    mapComponent.position -= velocity * dt;
-    for (final visualObj in visualObjects) {
-      visualObj.position -= velocity * dt;
-    }
     if (health <= 0) {
       overlays.add('GameOver');
     }
@@ -77,14 +73,19 @@ class VideoGame extends Forge2DGame
         mapComponent.tileMap.getLayer<ObjectGroup>("stars");
     ObjectGroup? enemigos = mapComponent.tileMap.getLayer<ObjectGroup>("gotas");
     ObjectGroup? main = mapComponent.tileMap.getLayer<ObjectGroup>("initial");
+    ObjectGroup? scene = mapComponent.tileMap.getLayer<ObjectGroup>("suelo");
+
+    for(final suelo in scene!.objects){
+      SceneBody body=SceneBody(tiledBody: suelo);
+      add(body);
+    }
 
     for (final enemigo in enemigos!.objects) {
       // print("------------" + estrella.x.toString()+"//"+ estrella.y.toString());
-      EnemyPlayer enemyPlayer =
-          EnemyPlayer(position: Vector2(enemigo.x, enemigo.y));
-
-      visualObjects.add(enemyPlayer);
-      add(enemyPlayer);
+      EnemyBody enemyComponent = EnemyBody(
+          posXY: Vector2(enemigo.x,enemigo.y),
+          tamWH: Vector2(64,64));
+      add(enemyComponent);
     }
     for (final estrella in estrellas!.objects) {
       // print("------------" + estrella.x.toString()+"//"+ estrella.y.toString());
