@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
@@ -5,14 +7,13 @@ import 'package:flame_forge2d/body_component.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_game/game/VideoGame.dart';
 import 'package:flutter_game/players/EnemyPlayer.dart';
 import 'package:forge2d/src/dynamics/body.dart';
-
 import '../elements/Star.dart';
-import '../game/VideoGame.dart';
-import '../ux/JoyPad.dart';
+import '../ux/joypad.dart';
 
-class PlayerBody extends BodyComponent<VideoGame> {
+class PlayerBody extends BodyComponent<VideoGame> with KeyboardHandler {
   Vector2 position;
   Vector2 size = Vector2(32, 32);
   late MainPlayer mainPlayer;
@@ -30,10 +31,12 @@ class PlayerBody extends BodyComponent<VideoGame> {
   Future<void> onLoad() async {
     // TODO: implement onLoad
     await super.onLoad();
-    mainPlayer = MainPlayer(position: Vector2(0, 0));
+
+    mainPlayer = MainPlayer(position: Vector2.zero());
     mainPlayer.size = size;
     add(mainPlayer);
     renderBody = true;
+
     game.overlays.addEntry(
         'Joypad', (_, game) => Joypad(onDirectionChanged: joypadMoved));
   }
@@ -53,6 +56,7 @@ class PlayerBody extends BodyComponent<VideoGame> {
       restitution: 0.5,
     );
     cuerpo.createFixture(fixtureDef);
+
     return cuerpo;
   }
 
@@ -61,7 +65,6 @@ class PlayerBody extends BodyComponent<VideoGame> {
     super.onMount();
     camera.followBodyComponent(this);
   }
-
 
   void joypadMoved(Direction direction) {
     if (direction == Direction.none) {
@@ -82,7 +85,7 @@ class PlayerBody extends BodyComponent<VideoGame> {
     }
   }
 
- /* @override
+  @override
   bool onKeyEvent(RawKeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
     horizontalMove = 0;
     verticalMove = 0;
@@ -102,14 +105,14 @@ class PlayerBody extends BodyComponent<VideoGame> {
         keysPressed.contains(LogicalKeyboardKey.arrowDown))) {
       verticalMove = 1;
     }
-
     game.setDirection(horizontalMove, verticalMove);
 
     return true;
-  }*/
+  }
 
   @override
   void update(double dt) {
+    // TODO: implement update
     velocity.x = horizontalMove * moveSpeed;
     velocity.y = verticalMove * moveSpeed;
     velocity.y += -1 * jumpSpeed;
@@ -119,25 +122,24 @@ class PlayerBody extends BodyComponent<VideoGame> {
     if (horizontalMove < 0 && mainPlayer.scale.x > 0) {
       mainPlayer.flipHorizontallyAroundCenter();
     } else if (horizontalMove > 0 && mainPlayer.scale.x < 0) {
+      //flipAxisDirection(AxisDirection.left);
       mainPlayer.flipHorizontallyAroundCenter();
     }
 
-    if (game.health <= 0) {
+    if (position.x < -size.x || game.health <= 0) {
       game.setDirection(0, 0);
       removeFromParent();
     }
+
     super.update(dt);
   }
 }
 
 class MainPlayer extends SpriteAnimationComponent
-    with HasGameRef<VideoGame>, KeyboardHandler, CollisionCallbacks {
+    with HasGameRef<VideoGame>, CollisionCallbacks {
   MainPlayer({
     required super.position,
   }) : super(anchor: Anchor.center);
-
-  int horizontalMove = 0;
-  int verticalMove = 0;
 
   late CircleHitbox hitbox;
 
@@ -149,7 +151,7 @@ class MainPlayer extends SpriteAnimationComponent
       game.images.fromCache('ember.png'),
       SpriteAnimationData.sequenced(
         amount: 4,
-        textureSize: Vector2.all(16),
+        textureSize: Vector2(16, 16),
         stepTime: 0.12,
       ),
     );
@@ -165,25 +167,25 @@ class MainPlayer extends SpriteAnimationComponent
     if (other is EnemyPlayer) {
       hit();
     }
+
     super.onCollision(intersectionPoints, other);
   }
 
   void hit() {
     if (!hitByEnemy) {
       hitByEnemy = true;
-
+      game.health--;
       add(
         OpacityEffect.fadeOut(
           EffectController(
             alternate: true,
             duration: 0.1,
-            repeatCount: 4,
+            repeatCount: 6,
           ),
         )..onComplete = () {
             hitByEnemy = false;
           },
       );
-      game.health--;
     }
   }
 }

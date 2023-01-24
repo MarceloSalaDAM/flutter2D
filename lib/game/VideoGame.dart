@@ -75,16 +75,15 @@ class VideoGame extends Forge2DGame
     ObjectGroup? main = mapComponent.tileMap.getLayer<ObjectGroup>("initial");
     ObjectGroup? scene = mapComponent.tileMap.getLayer<ObjectGroup>("suelo");
 
-    for(final suelo in scene!.objects){
-      SceneBody body=SceneBody(tiledBody: suelo);
+    for (final suelo in scene!.objects) {
+      SceneBody body = SceneBody(tiledBody: suelo);
       add(body);
     }
 
     for (final enemigo in enemigos!.objects) {
       // print("------------" + estrella.x.toString()+"//"+ estrella.y.toString());
       EnemyBody enemyComponent = EnemyBody(
-          posXY: Vector2(enemigo.x,enemigo.y),
-          tamWH: Vector2(64,64));
+          posicion: Vector2(enemigo.x, enemigo.y), tamano: Vector2(32, 32));
       add(enemyComponent);
     }
     for (final estrella in estrellas!.objects) {
@@ -127,6 +126,6 @@ class VideoGame extends Forge2DGame
       verticalMove = 1;
     }
 
-    _mainBody.mainPlayer.horizontalMove = horizontalMove;
+    _mainBody.horizontalMove = horizontalMove;
   }
 }
