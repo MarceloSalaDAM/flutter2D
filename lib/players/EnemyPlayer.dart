@@ -7,7 +7,7 @@ import '../game/VideoGame.dart';
 class EnemyPlayer extends SpriteAnimationComponent with HasGameRef<VideoGame> {
   EnemyPlayer({
     required super.position,required super.size
-  }) : super(anchor: Anchor.bottomCenter);
+  }) : super(anchor: Anchor.center);
 
   @override
   Future<void> onLoad() async {
